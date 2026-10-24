@@ -1,3 +1,4 @@
+from business_rules import calculate_stay_total
 from business_rules import calculate_room_cost, get_stay_discount
 
 
@@ -28,3 +29,27 @@ def test_corporate_changes_short_stay_discount():
 
 def test_corporate_keeps_larger_long_stay_discount():
     assert get_stay_discount(14, True) == 0.18
+
+
+def test_cleaning_fee_at_exactly_three_hundred():
+    assert round(calculate_stay_total(150.00, 2), 2) == 340.00
+
+
+def test_no_cleaning_fee_one_cent_above_limit():
+    assert round(calculate_stay_total(300.01, 1), 2) == 300.01
+
+
+def test_cleaning_fee_below_limit():
+    assert round(calculate_stay_total(110.00, 2), 2) == 260.00
+
+
+def test_corporate_discount_before_cleaning_fee():
+    assert round(calculate_stay_total(150.00, 2, True), 2) == 322.00
+
+
+def test_stay_total_with_six_percent_discount():
+    assert round(calculate_stay_total(125.00, 6), 2) == 705.00
+
+
+def test_stay_total_with_eighteen_percent_discount():
+    assert round(calculate_stay_total(140.00, 20), 2) == 2296.00
