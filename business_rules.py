@@ -1,3 +1,7 @@
+CREDIT_CHECK_LIMIT = 2000.00
+WELCOME_NIGHTS_LIMIT = 5
+WELCOME_TOTAL_LIMIT = 1000.00
+
 CLEANING_FEE = 40.00
 CLEANING_FEE_LIMIT = 300.00
 
@@ -32,3 +36,13 @@ def calculate_stay_total(
     if discounted_cost <= CLEANING_FEE_LIMIT:
         return discounted_cost + CLEANING_FEE
     return discounted_cost
+
+
+def requires_credit_check(total: float) -> bool:
+    """Return whether the stay total requires a credit check."""
+    return total >= CREDIT_CHECK_LIMIT
+
+
+def gets_welcome_package(nights: int, total: float) -> bool:
+    """Return whether both welcome package conditions are met."""
+    return nights > WELCOME_NIGHTS_LIMIT and total >= WELCOME_TOTAL_LIMIT
