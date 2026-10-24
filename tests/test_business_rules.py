@@ -1,3 +1,4 @@
+from business_rules import total_reserved, largest_stay
 from business_rules import requires_credit_check, gets_welcome_package
 from business_rules import calculate_stay_total
 from business_rules import calculate_room_cost, get_stay_discount
@@ -82,3 +83,35 @@ def test_welcome_package_at_exact_total_limit():
 
 def test_no_welcome_package_when_both_conditions_fail():
     assert gets_welcome_package(5, 999.99) is False
+
+
+def test_total_reserved_adds_short_list():
+    stays = [
+        {"guest": "A", "nightly_rate": 110.00, "nights": 2, "corporate": False},
+        {"guest": "B", "nightly_rate": 125.00, "nights": 6, "corporate": False},
+    ]
+    assert round(total_reserved(stays), 2) == 965.00
+
+
+def test_total_reserved_empty_list():
+    assert round(total_reserved([]), 2) == 0.00
+
+
+def test_largest_stay_returns_guest_with_largest_total():
+    stays = [
+        {"guest": "A", "nightly_rate": 110.00, "nights": 2, "corporate": False},
+        {"guest": "B", "nightly_rate": 125.00, "nights": 6, "corporate": False},
+    ]
+    assert largest_stay(stays) == "B"
+
+
+def test_largest_stay_keeps_first_guest_in_tie():
+    stays = [
+        {"guest": "First", "nightly_rate": 110.00, "nights": 2, "corporate": False},
+        {"guest": "Second", "nightly_rate": 110.00, "nights": 2, "corporate": False},
+    ]
+    assert largest_stay(stays) == "First"
+
+
+def test_largest_stay_empty_list():
+    assert largest_stay([]) == ""

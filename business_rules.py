@@ -46,3 +46,27 @@ def requires_credit_check(total: float) -> bool:
 def gets_welcome_package(nights: int, total: float) -> bool:
     """Return whether both welcome package conditions are met."""
     return nights > WELCOME_NIGHTS_LIMIT and total >= WELCOME_TOTAL_LIMIT
+
+
+def total_reserved(stays: list) -> float:
+    """Return the combined total of all stays."""
+    total = 0.0
+    for stay in stays:
+        total += calculate_stay_total(
+            stay["nightly_rate"], stay["nights"], stay["corporate"]
+        )
+    return total
+
+
+def largest_stay(stays: list) -> str:
+    """Return the first guest with the largest total, or an empty string."""
+    largest_guest = ""
+    largest_total = 0.0
+    for stay in stays:
+        stay_total = calculate_stay_total(
+            stay["nightly_rate"], stay["nights"], stay["corporate"]
+        )
+        if largest_guest == "" or stay_total > largest_total:
+            largest_total = stay_total
+            largest_guest = stay["guest"]
+    return largest_guest
