@@ -1,3 +1,4 @@
+from business_rules import format_stay_line
 from business_rules import total_reserved, largest_stay
 from business_rules import requires_credit_check, gets_welcome_package
 from business_rules import calculate_stay_total
@@ -115,3 +116,21 @@ def test_largest_stay_keeps_first_guest_in_tie():
 
 def test_largest_stay_empty_list():
     assert largest_stay([]) == ""
+
+
+def test_format_stay_line_with_both_no():
+    assert format_stay_line("Kessler", 260.0, False, False) == (
+        "Kessler: $260.00 | credit check: no | welcome package: no"
+    )
+
+
+def test_format_stay_line_with_both_yes():
+    assert format_stay_line("Nakata", 2296.0, True, True) == (
+        "Nakata: $2296.00 | credit check: yes | welcome package: yes"
+    )
+
+
+def test_format_stay_line_with_mixed_flags():
+    assert format_stay_line("Guest", 1200.5, False, True) == (
+        "Guest: $1200.50 | credit check: no | welcome package: yes"
+    )

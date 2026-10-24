@@ -70,3 +70,15 @@ def largest_stay(stays: list) -> str:
             largest_total = stay_total
             largest_guest = stay["guest"]
     return largest_guest
+
+
+def format_stay_line(
+    guest: str, total: float, credit_check: bool, welcome_package: bool
+) -> str:
+    """Return one formatted stay report line."""
+    credit_text = "yes" if credit_check else "no"
+    welcome_text = "yes" if welcome_package else "no"
+    return (
+        f"{guest}: ${total:.2f} | credit check: {credit_text}"
+        f" | welcome package: {welcome_text}"
+    )
