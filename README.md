@@ -51,4 +51,4 @@ pytest -v
 
 ## AI Use Statement
 
-I used ChatGPT for step-by-step guidance, code and test generation, and documentation assistance.
+I did not use AI for this assignment. 
